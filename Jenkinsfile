@@ -1,8 +1,5 @@
 pipeline {
   agent any
-  tools {
-    maven 'Maven 3.9.14'
-  }
   stages {
     stage('Build') {
       steps {
@@ -31,23 +28,30 @@ pipeline {
                 dockerImage.push("dev")
               }
             }
+
           }
         }
+
       }
     }
 
     stage('Trigger Deploy') {
       steps {
         script {
-          build job: 'Deploy', wait: false
+          build job: 'DeploySyncSpace', wait: false
         }
+
       }
     }
-  }
 
+  }
+  tools {
+    maven 'Maven 3.9.14'
+  }
   post {
     always {
       echo 'This pipeline is completed.'
     }
+
   }
 }
