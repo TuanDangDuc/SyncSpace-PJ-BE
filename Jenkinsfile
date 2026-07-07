@@ -25,7 +25,7 @@ pipeline {
             script {
               docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin') {
                 def commitHash = env.GIT_COMMIT?.take(7) ?: sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
-                def dockerImage = docker.build("ductuanbl2000/be-study-hub-app:${commitHash}", "./")
+                def dockerImage = docker.build("ductuanbl2000/be-sync-space-app:${commitHash}", "./")
                 dockerImage.push()
                 dockerImage.push("latest")
                 dockerImage.push("dev")
