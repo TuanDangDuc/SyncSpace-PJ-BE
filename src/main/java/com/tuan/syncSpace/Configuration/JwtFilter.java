@@ -56,6 +56,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         return path.startsWith("/actuator") ||
                 path.startsWith("/api/user/login") ||
+                path.startsWith("/api/user/refresh/**") ||
                 path.startsWith("/api/user/register") ||
                 path.startsWith("/api/user/forgot-password") ||
                 path.startsWith("/api/user/verify-otp") ||
