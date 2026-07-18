@@ -4,6 +4,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.Map;
 
 
 @RequiredArgsConstructor
@@ -16,4 +20,5 @@ public class AppException extends RuntimeException {
         super(message);
         this.errorCode = errorCode;
     }
+
 }

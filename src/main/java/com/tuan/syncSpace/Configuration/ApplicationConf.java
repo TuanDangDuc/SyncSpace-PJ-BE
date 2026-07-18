@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.springframework.data.web.config.EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO;
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO)
 public class ApplicationConf {
 
@@ -32,10 +32,11 @@ public class ApplicationConf {
 
     @Bean
     DaoAuthenticationProvider daoAuthenticationProvider(
-            @Lazy UserDetailsService userDetailsService
+            @Lazy UserDetailsService userDetailsService,
+            PasswordEncoder passwordEncoder
     ) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
-        provider.setPasswordEncoder(passwordEncoder());
+        provider.setPasswordEncoder(passwordEncoder);
         return provider;
     }
 }

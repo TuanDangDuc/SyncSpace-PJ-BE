@@ -3,7 +3,9 @@ package com.tuan.syncSpace.Entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.tuan.syncSpace.Enum.BookingStatus;
+import com.tuan.syncSpace.Enum.PaymentStatus;
 import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -11,6 +13,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Setter
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookingEntity {
 
     @Id
@@ -19,13 +26,8 @@ public class BookingEntity {
     @CreationTimestamp
     private LocalDateTime createAt;
     @Enumerated(EnumType.STRING)
-    private BookingStatus bookingStatus;
-
-    @ManyToOne(
-            fetch = FetchType.LAZY
-    )
-    @JsonBackReference
-    private WorkSpaceEntity workSpace;
+    private PaymentStatus paymentStatus;
+    private Integer totalCost;
 
     @ManyToOne(
             fetch = FetchType.LAZY

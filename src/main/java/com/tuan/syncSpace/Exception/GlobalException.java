@@ -34,4 +34,13 @@ public class GlobalException {
                 .status(ex.getErrorCode())
                 .body(ex.getMessage());
     }
+
+    @ExceptionHandler(value = AppDetailException.class)
+    public ResponseEntity<?> handleAppDetailException(
+            AppDetailException ex
+    ) {
+        return ResponseEntity
+                .status(ex.getErrorCode())
+                .body(ex.getDetailMessage());
+    }
 }

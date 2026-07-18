@@ -1,26 +1,39 @@
 package com.tuan.syncSpace.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.tuan.syncSpace.Enum.Type;
 import com.tuan.syncSpace.Enum.WorkSpaceStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class WorkSpaceEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private Integer floor;
-    private Integer roomNumber;
+    private String roomNumber;
+    @Enumerated(EnumType.STRING)
     private Type type;
     private Integer acreage;
+    @Enumerated(EnumType.STRING)
     private WorkSpaceStatus status;
     private Integer capacity;
-
+    private Integer pricePerHour;
+    private String thumbnailUrl;
     @ManyToOne(
             fetch = FetchType.LAZY
     )
@@ -28,8 +41,11 @@ public class WorkSpaceEntity {
     private LocationEntity locationEntity;
 
     @OneToMany(
-            mappedBy = "workSpace"
+            mappedBy = "workSpaceEntity",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
-    @JsonManagedReference
-    private List<BookingEntity> bookingEntities;
+    @JsonIgnoreProperties({"workSpaceEntity"})
+    private List<BookingSlotEntity>  bookingSlotEntities;
+
 }
